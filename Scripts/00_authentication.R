@@ -27,12 +27,4 @@ r <-  POST(
 cnt <- httr::content(r)
 token <- str_c(cnt$token_type, cnt$access_token, sep =' ')
 
-# --------------------------------------
-
-auth = spotifyr::get_spotify_authorization_code(Sys.getenv("1acdf91f2d3a4fe089539ff0d3f0392b"),
-                                                Sys.getenv("b49411cdd0834f6d85c9374c2062f371"),
-                                                scopes)
-
-playlists = spotifyr::get_user_playlists('1acdf91f2d3a4fe089539ff0d3f0392b', limit, offset, authorization = auth)
-
 
