@@ -4,41 +4,40 @@
 # especially with new artists. 
 # The idea behind this project is to take 4 pillars in the pop-music scene, 
 # starting from the 60-70's till our days. The artists that were selected
-# are: Micheal Jackson (80-90's), Madonna (90-00's), Britney Spears (00-10's) 
+# are: Prince (80-90's), Madonna (90-00's), Pitbull (00-10's) 
 # and Drake (10-20's)
 
-# - MJ 80-90
+# - PRINCE 80-90
 # - MADONNA 90-00
-# - BS 00-10
+# - PITBULL 00-10
 # - DRAKE 10-22
 
 # Getting audio features ----------------
 
-MJ <- get_artist_audio_features("Michael Jackson")
+PRINCE <- get_artist_audio_features("Prince")
 MADONNA <- get_artist_audio_features("Madonna")
-BS <- get_artist_audio_features("Britney Spears")
+PITBULL <- get_artist_audio_features("Pitbull")
 DRAKE <- get_artist_audio_features("Drake")
 
+# PRINCE
 
-# MICHAEL JACKSON
-
-Explicit_MJ <- MJ %>% 
+Explicit_PR <- PRINCE %>% 
   filter %>% 
   select(track_name, album_release_year, explicit)
 
-Explicit_MJ = mutate(
-  Explicit_MJ, 
-  album_release_year = ifelse(Explicit_MJ$album_release_year == 1980, "1980",
-                              ifelse(Explicit_MJ$album_release_year == 1981, "1981",
-                                     ifelse(Explicit_MJ$album_release_year == 19682, "1982",
-                                            ifelse(Explicit_MJ$album_release_year == 1983, "1983",
-                                                   ifelse(Explicit_MJ$album_release_year == 1984, "1984",
-                                                          ifelse(Explicit_MJ$album_release_year == 1985, "1985",
-                                                                 ifelse(Explicit_MJ$album_release_year == 1986, "1986",
-                                                                        ifelse(Explicit_MJ$album_release_year == 1987, "1987",
-                                                                               ifelse(Explicit_MJ$album_release_year == 1988, "1988",
-                                                                                      ifelse(Explicit_MJ$album_release_year == 1989, "1989",
-                                                                                             ifelse(Explicit_MJ$album_release_year == 1990, "1990",
+Explicit_PR = mutate(
+  Explicit_PR, 
+  album_release_year = ifelse(Explicit_PR$album_release_year == 1980, "1980",
+                              ifelse(Explicit_PR$album_release_year == 1981, "1981",
+                                     ifelse(Explicit_PR$album_release_year == 19682, "1982",
+                                            ifelse(Explicit_PR$album_release_year == 1983, "1983",
+                                                   ifelse(Explicit_PR$album_release_year == 1984, "1984",
+                                                          ifelse(Explicit_PR$album_release_year == 1985, "1985",
+                                                                 ifelse(Explicit_PR$album_release_year == 1986, "1986",
+                                                                        ifelse(Explicit_PR$album_release_year == 1987, "1987",
+                                                                               ifelse(Explicit_PR$album_release_year == 1988, "1988",
+                                                                                      ifelse(Explicit_PR$album_release_year == 1989, "1989",
+                                                                                             ifelse(Explicit_PR$album_release_year == 1990, "1990",
                                                                                                     "na"))))))))))))
 
 
@@ -63,25 +62,25 @@ Explicit_MD = mutate(
                                                                                ifelse (Explicit_MD$album_release_year == 2000, "2000",
                                                                                "na"))))))))))))
 
-# BRITNEY SPEARS
+# PITBULL
 
-Explicit_BS <- BS %>% 
+Explicit_PB <- PITBULL %>% 
   filter %>% 
   select(track_name, album_release_year, explicit)
 
-Explicit_BS = mutate(
-  Explicit_BS, 
-  album_release_year = ifelse(Explicit_BS$album_release_year == 2000, "2000",
-                          ifelse(Explicit_BS$album_release_year == 2001, "2001",
-                                 ifelse(Explicit_BS$album_release_year == 2002, "2002",
-                                        ifelse(Explicit_BS$album_release_year == 2003, "2003",
-                                               ifelse(Explicit_BS$album_release_year == 2004, "2004",
-                                                      ifelse(Explicit_BS$album_release_year == 2005, "2005",
-                                                             ifelse(Explicit_BS$album_release_year == 2006, "2006",
-                                                                    ifelse(Explicit_BS$album_release_year == 2007, "2007",
-                                                                           ifelse(Explicit_BS$album_release_year == 2008, "2008",
-                                                                                  ifelse(Explicit_BS$album_release_year == 2009, "2009",
-                                                                                         ifelse(Explicit_BS$album_release_year == 2010, "2010",
+Explicit_PB = mutate(
+  Explicit_PB, 
+  album_release_year = ifelse(Explicit_PB$album_release_year == 2000, "2000",
+                          ifelse(Explicit_PB$album_release_year == 2001, "2001",
+                                 ifelse(Explicit_PB$album_release_year == 2002, "2002",
+                                        ifelse(Explicit_PB$album_release_year == 2003, "2003",
+                                               ifelse(Explicit_PB$album_release_year == 2004, "2004",
+                                                      ifelse(Explicit_PB$album_release_year == 2005, "2005",
+                                                             ifelse(Explicit_PB$album_release_year == 2006, "2006",
+                                                                    ifelse(Explicit_PB$album_release_year == 2007, "2007",
+                                                                           ifelse(Explicit_PB$album_release_year == 2008, "2008",
+                                                                                  ifelse(Explicit_PB$album_release_year == 2009, "2009",
+                                                                                         ifelse(Explicit_PB$album_release_year == 2010, "2010",
                                                                                                 "na"))))))))))))
                     
 #DRAKE
