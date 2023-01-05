@@ -7,10 +7,10 @@
 # are: Prince (80-90's), Madonna (90-00's), Pitbull (00-10's) 
 # and Drake (10-20's)
 
-# - PRINCE 80-90
-# - MADONNA 90-00
-# - PITBULL 00-10
-# - DRAKE 10-22
+# - PRINCE 80's
+# - MADONNA 90's
+# - PITBULL first 2000 decade
+# - DRAKE second 2000 decade
 
 # Getting audio features ----------------
 
@@ -27,8 +27,7 @@ Explicit_PR <- PRINCE %>%
 
 Explicit_PR = mutate(
   Explicit_PR, 
-  album_release_year = ifelse(Explicit_PR$album_release_year == 1980, "1980",
-                              ifelse(Explicit_PR$album_release_year == 1981, "1981",
+  album_release_year =ifelse(Explicit_PR$album_release_year == 1981, "1981",
                                      ifelse(Explicit_PR$album_release_year == 19682, "1982",
                                             ifelse(Explicit_PR$album_release_year == 1983, "1983",
                                                    ifelse(Explicit_PR$album_release_year == 1984, "1984",
@@ -38,7 +37,7 @@ Explicit_PR = mutate(
                                                                                ifelse(Explicit_PR$album_release_year == 1988, "1988",
                                                                                       ifelse(Explicit_PR$album_release_year == 1989, "1989",
                                                                                              ifelse(Explicit_PR$album_release_year == 1990, "1990",
-                                                                                                    "na"))))))))))))
+                                                                                                    "na")))))))))))
 
 
 # MADONNA
@@ -49,8 +48,7 @@ Explicit_MD <- MADONNA %>%
 
 Explicit_MD = mutate(
   Explicit_MD, 
-  album_release_year = ifelse(Explicit_MD$album_release_year == 1990, "1990",
-                              ifelse(Explicit_MD$album_release_year == 1991, "1991",
+  album_release_year = ifelse(Explicit_MD$album_release_year == 1991, "1991",
                                      ifelse(Explicit_MD$album_release_year == 1992, "1992",
                                             ifelse(Explicit_MD$album_release_year == 1993, "1993",
                                                    ifelse(Explicit_MD$album_release_year == 1994, "1994",
@@ -59,8 +57,8 @@ Explicit_MD = mutate(
                                                                         ifelse(Explicit_MD$album_release_year == 1997, "1997",
                                                                                ifelse (Explicit_MD$album_release_year == 1998, "1998",
                                                                                ifelse (Explicit_MD$album_release_year == 1999, "1999",
-                                                                               ifelse (Explicit_MD$album_release_year == 2000, "2000",
-                                                                               "na"))))))))))))
+                                                                                       ifelse(Explicit_MD$album_release_year == 2000, "2000",
+                                                                               "na")))))))))))
 
 # PITBULL
 
@@ -70,8 +68,7 @@ Explicit_PB <- PITBULL %>%
 
 Explicit_PB = mutate(
   Explicit_PB, 
-  album_release_year = ifelse(Explicit_PB$album_release_year == 2000, "2000",
-                          ifelse(Explicit_PB$album_release_year == 2001, "2001",
+  album_release_year =  ifelse(Explicit_PB$album_release_year == 2001, "2001",
                                  ifelse(Explicit_PB$album_release_year == 2002, "2002",
                                         ifelse(Explicit_PB$album_release_year == 2003, "2003",
                                                ifelse(Explicit_PB$album_release_year == 2004, "2004",
@@ -81,7 +78,7 @@ Explicit_PB = mutate(
                                                                            ifelse(Explicit_PB$album_release_year == 2008, "2008",
                                                                                   ifelse(Explicit_PB$album_release_year == 2009, "2009",
                                                                                          ifelse(Explicit_PB$album_release_year == 2010, "2010",
-                                                                                                "na"))))))))))))
+                                                                                                "na")))))))))))
                     
 #DRAKE
 
@@ -92,8 +89,7 @@ Explicit_DR<- DRAKE %>%
 
 Explicit_DR = mutate(
   Explicit_DR, 
-  album_release_year = ifelse(Explicit_DR$album_release_year == 2010, "2010",
-                              ifelse(Explicit_DR$album_release_year == 2011, "2011",
+  album_release_year =ifelse(Explicit_DR$album_release_year == 2011, "2011",
                                      ifelse(Explicit_DR$album_release_year == 2012, "2012",
                                             ifelse(Explicit_DR$album_release_year == 2013, "2013",
                                                    ifelse(Explicit_DR$album_release_year == 2014, "2014",
@@ -103,6 +99,6 @@ Explicit_DR = mutate(
                                                                                ifelse(Explicit_DR$album_release_year == 2018, "2018",
                                                                                       ifelse(Explicit_DR$album_release_year == 2019, "2019",
                                                                                              ifelse(Explicit_DR$album_release_year == 2020, "2020",
-                                                                                                    "na"))))))))))))
+                                                                                                    "na")))))))))))
 
                       
