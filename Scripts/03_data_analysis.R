@@ -11,6 +11,7 @@ library(dplyr)
 library(tidyr)
 library(ggplot2)
 library(readr)
+library(htmltools)
 
 #PRINCE
 
@@ -105,7 +106,14 @@ boxplot(explicit ~ album_release_year, data = AllDf,
         horizontal = T,
         las = 2)
 
+m.v <- lm(explicit~album_release_year, data = AllDf2) 
+summary(m.v) 
+
 #adding the "artists" column to the data frame
+
+library(ggplot2)
+library(viridis)
+library(hrbrthemes)
 
 AllDf2 <- AllDf %>%
   add_column(artists = "artists")
@@ -113,15 +121,28 @@ AllDf2
 
 AllDf2 = mutate(
   AllDf2, 
-  artists = ifelse(AllDf2$album_release_year <= 1990, "Prince",
-                   ifelse(AllDf2$album_release_year <= 2000, "Madonna",
-                          ifelse(AllDf2$album_release_year <= 2010, "Pitbull",
-                                 ifelse(AllDf2$album_release_year <= 2020, "Drake")))))
+  artists = ifelse(AllDf2$album_release_year <= 1990, "1. Prince",
+                   ifelse(AllDf2$album_release_year <= 2000, "2. Madonna",
+                          ifelse(AllDf2$album_release_year <= 2010, "3. Pitbull",
+                                 ifelse(AllDf2$album_release_year <= 2020, "4. Drake")))))
 
-ggplot(AllDf2, aes(x = explicit, y = album_release_year)) +
-  geom_line() +
+
+ggplot(AllDf2, aes(explicit, album_release_year, colour = artists)) + 
+  geom_point()+
   facet_wrap(~artists, ncol = 5) +
   ylab("Year") +
   xlab("Explicit content") +
   scale_x_continuous(breaks = seq(0, 1)) +
   theme_bw()
+
+
+ggplot(AllDf2, aes(fill=artists, y=album_release_year, x=explicit)) + 
+  geom_bar(position="dodge", stat="identity") +
+  scale_fill_viridis(discrete = T, option = "E") +
+  ggtitle("Explicit lyrics through time") +
+  facet_wrap(~artists, ncol = 5) +
+  theme_ipsum() +
+  theme(legend.position="none") +
+  xlab("Explicit lyrics in songs")+
+  ylab("Year of release")
+  scale_x_continuous(breaks = seq(0, 1))
