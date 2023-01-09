@@ -1,7 +1,5 @@
 # The first thing required is the authentication to the API 
 
-install.packages('spotifyr')
-
 library(spotifyr)
 library(tidyverse)
 library(httr)
