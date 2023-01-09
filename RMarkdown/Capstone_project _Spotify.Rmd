@@ -1,0 +1,375 @@
+---
+title: "Capstone project Spotify"
+subtitle: "An analysys though the pop music scenario and the increasing of explicit lyrics"
+author: "Barriera Gaia"
+date: "2023-01-07"
+output: html_document
+---
+
+## Introdution
+
+Explicit lyrics on Spotify are becoming more and more common on streaming platforms, such as Spotify, people now can filter their preferences and exclude explicit content from their playlists. But when did explicit lyrics actually become a "thing" in the music scene? Is this increase due to new generations of artists?
+
+```{r creds, echo=FALSE, warning=F, message=F}
+
+library(spotifyr)
+library(tidyverse)
+library(httr)
+library(stringr)
+library(cowplot)
+library(dplyr)
+library(tidyr)
+
+client_credentials <- Sys.setenv(SPOTIFY_CLIENT_ID = '1acdf91f2d3a4fe089539ff0d3f0392b') + 
+  Sys.setenv(SPOTIFY_CLIENT_SECRET = 'b49411cdd0834f6d85c9374c2062f371')
+
+access_token <- get_spotify_access_token()
+
+r <-  POST(
+  url = 'https://accounts.spotify.com/api/token',
+  accept_json(),
+  body = list(grant_type = 'client_credentials',
+              client_id = "1acdf91f2d3a4fe089539ff0d3f0392b",
+              client_secret = "b49411cdd0834f6d85c9374c2062f371", 
+              content_type = "application/x-www-form-urlencoded"),   
+  encode = 'form',
+  verbose()
+)
+cnt <- httr::content(r)
+token <- str_c(cnt$token_type, cnt$access_token, sep =' ')
+
+
+```
+
+The idea behind this project is to investigate whether new and old artists share approximately the same amount of explicit content in their songs or not.
+
+## Hypotheses
+
+- H0: explicit content in songs has not increased through years in the pop music scene
+- Ha: explicit content in songs has increased through years in the pop music scene
+
+## Sample and Method
+
+The sample for this project is composed by 4 pillars in the pop-music scene, starting from the 80's till our days. The artists that were selected are:
+
+- Prince 80's
+- Madonna 90's
+- Pitbull first 2000 decade
+- Drake second 2000 decade
+
+```{r, eval=FALSE}
+PRINCE <- get_artist_audio_features("Prince")
+MADONNA <- get_artist_audio_features("Madonna")
+PITBULL <- get_artist_audio_features("Pitbull")
+DRAKE <- get_artist_audio_features("Drake")
+
+```
+
+After getting the credentials, by using the Spotify API, I created data frames for each selected artist. I was interested in getting their audio features and selecting only the years implied for the research. First, I decided to analyse artists one by one and after that I created a data frame with all the artists, trying to see if there is an actual correlation between the increase of explicit lyrics and time.
+
+```{r, echo=FALSE, warning=F, message=F}
+# Getting audio features ----------------
+
+PRINCE <- get_artist_audio_features("Prince")
+MADONNA <- get_artist_audio_features("Madonna")
+PITBULL <- get_artist_audio_features("Pitbull")
+DRAKE <- get_artist_audio_features("Drake")
+
+# PRINCE
+
+Explicit_PR <- PRINCE %>% 
+  filter %>% 
+  select(track_name, album_release_year, explicit)
+
+Explicit_PR = mutate(
+  Explicit_PR, 
+  album_release_year =ifelse(Explicit_PR$album_release_year == 1981, "1981",
+                                     ifelse(Explicit_PR$album_release_year == 19682, "1982",
+                                            ifelse(Explicit_PR$album_release_year == 1983, "1983",
+                                                   ifelse(Explicit_PR$album_release_year == 1984, "1984",
+                                                          ifelse(Explicit_PR$album_release_year == 1985, "1985",
+                                                                 ifelse(Explicit_PR$album_release_year == 1986, "1986",
+                                                                        ifelse(Explicit_PR$album_release_year == 1987, "1987",
+                                                                               ifelse(Explicit_PR$album_release_year == 1988, "1988",
+                                                                                      ifelse(Explicit_PR$album_release_year == 1989, "1989",
+                                                                                             ifelse(Explicit_PR$album_release_year == 1990, "1990",
+                                                                                                    "na")))))))))))
+
+
+# MADONNA
+
+Explicit_MD <- MADONNA %>% 
+  filter %>% 
+  select(track_name, album_release_year, explicit)
+
+Explicit_MD = mutate(
+  Explicit_MD, 
+  album_release_year = ifelse(Explicit_MD$album_release_year == 1991, "1991",
+                                     ifelse(Explicit_MD$album_release_year == 1992, "1992",
+                                            ifelse(Explicit_MD$album_release_year == 1993, "1993",
+                                                   ifelse(Explicit_MD$album_release_year == 1994, "1994",
+                                                          ifelse(Explicit_MD$album_release_year == 1995, "1995",
+                                                                 ifelse(Explicit_MD$album_release_year == 1996, "1996",
+                                                                        ifelse(Explicit_MD$album_release_year == 1997, "1997",
+                                                                               ifelse (Explicit_MD$album_release_year == 1998, "1998",
+                                                                               ifelse (Explicit_MD$album_release_year == 1999, "1999",
+                                                                                       ifelse(Explicit_MD$album_release_year == 2000, "2000",
+                                                                               "na")))))))))))
+
+# PITBULL
+
+Explicit_PB <- PITBULL %>% 
+  filter %>% 
+  select(track_name, album_release_year, explicit)
+
+Explicit_PB = mutate(
+  Explicit_PB, 
+  album_release_year =  ifelse(Explicit_PB$album_release_year == 2001, "2001",
+                                 ifelse(Explicit_PB$album_release_year == 2002, "2002",
+                                        ifelse(Explicit_PB$album_release_year == 2003, "2003",
+                                               ifelse(Explicit_PB$album_release_year == 2004, "2004",
+                                                      ifelse(Explicit_PB$album_release_year == 2005, "2005",
+                                                             ifelse(Explicit_PB$album_release_year == 2006, "2006",
+                                                                    ifelse(Explicit_PB$album_release_year == 2007, "2007",
+                                                                           ifelse(Explicit_PB$album_release_year == 2008, "2008",
+                                                                                  ifelse(Explicit_PB$album_release_year == 2009, "2009",
+                                                                                         ifelse(Explicit_PB$album_release_year == 2010, "2010",
+                                                                                                "na")))))))))))
+                    
+#DRAKE
+
+
+Explicit_DR<- DRAKE %>% 
+  filter %>% 
+  select(track_name, album_release_year, explicit)
+
+Explicit_DR = mutate(
+  Explicit_DR, 
+  album_release_year =ifelse(Explicit_DR$album_release_year == 2011, "2011",
+                                     ifelse(Explicit_DR$album_release_year == 2012, "2012",
+                                            ifelse(Explicit_DR$album_release_year == 2013, "2013",
+                                                   ifelse(Explicit_DR$album_release_year == 2014, "2014",
+                                                          ifelse(Explicit_DR$album_release_year == 2015, "2015",
+                                                                 ifelse(Explicit_DR$album_release_year == 2016, "2016",
+                                                                        ifelse(Explicit_DR$album_release_year == 2017, "2017",
+                                                                               ifelse(Explicit_DR$album_release_year == 2018, "2018",
+                                                                                      ifelse(Explicit_DR$album_release_year == 2019, "2019",
+                                                                                             ifelse(Explicit_DR$album_release_year == 2020, "2020",
+                                                                                                    "na")))))))))))
+
+#Removing observations that do not fall within the selected decade
+
+Explicit_PR <- subset(Explicit_PR, album_release_year != "na" )
+Explicit_MD <- subset(Explicit_MD, album_release_year != "na" )
+Explicit_PB <- subset(Explicit_PB, album_release_year != "na" )
+Explicit_DR <- subset(Explicit_DR, album_release_year != "na" )
+
+Explicit_PR = subset(Explicit_PR, select = -c(track_name))
+Explicit_MD = subset(Explicit_MD, select = -c(track_name))
+Explicit_PB = subset(Explicit_PB, select = -c(track_name))
+Explicit_DR = subset(Explicit_DR, select = -c(track_name))
+
+
+Explicit_PR = mutate(
+  Explicit_PR, 
+  explicit = ifelse(Explicit_PR$explicit == TRUE, 1,
+                    0))
+
+Explicit_MD = mutate(
+  Explicit_MD, 
+  explicit = ifelse(Explicit_MD$explicit == TRUE, 1,
+                     0))
+
+Explicit_PB = mutate(
+  Explicit_PB, 
+  explicit = ifelse(Explicit_PB$explicit == TRUE, 1,
+                    0))
+
+Explicit_DR = mutate(
+  Explicit_DR, 
+  explicit = ifelse(Explicit_DR$explicit == TRUE, 1,
+                    0))
+                      
+```
+
+## Analysis 
+ 
+First of all I tried to calculate the single means for each artist in order to understand their own frequency. After that i created a data frame containing all those information collected before and I conducted the analysis with the given data - trying to see a correlation between the two variables. 
+After calculating the means, i run this functions for each artist:
+
+```{r, echo=FALSE}
+library(dplyr)
+library(tidyr)
+library(ggplot2)
+library(readr)
+library(htmltools)
+
+#PRINCE
+
+m1 <- mean(Explicit_PR$explicit)
+
+#MADONNA
+
+m2<-mean(Explicit_MD$explicit)
+
+#PITBULL
+
+m3 <-mean(Explicit_PB$explicit)
+
+#DRAKE
+
+m4 <- mean(Explicit_DR$explicit)
+
+# As we can see in this first case, the mean got higher and higher 
+# through the years, especially with artists that became famous
+# after 2000
+
+#PRINCE
+
+library(dplyr)
+
+plotdata <- Explicit_PR %>%
+  group_by(album_release_year) %>%
+  summarize(mean_expcont = mean(explicit))
+
+# plot mean 
+ggplot(plotdata, 
+       aes(x = album_release_year, 
+           y = mean_expcont)) +
+  geom_bar(stat = "identity")+
+  xlab("Year of release")+
+  ylab("Explicit lyrics mean")
+
+#MADONNA
+
+plotdata2 <- Explicit_MD %>%
+  group_by(album_release_year) %>%
+  summarize(mean_expcont2 = mean(explicit))
+
+# plot mean 
+ggplot(plotdata2, 
+       aes(x = album_release_year, 
+           y = mean_expcont2)) +
+  geom_bar(stat = "identity")+
+  xlab("Year of release")+
+  ylab("Explicit lyrics mean")
+
+
+#PITBULL
+
+plotdata3 <- Explicit_PB %>%
+  group_by(album_release_year) %>%
+  summarize(mean_expcont3 = mean(explicit))
+
+# plot mean 
+ggplot(plotdata3, 
+       aes(x = album_release_year, 
+           y = mean_expcont3)) +
+  geom_bar(stat = "identity")+
+  xlab("Year of release")+
+  ylab("Explicit lyrics mean")
+
+
+#DRAKE
+
+plotdata4 <- Explicit_DR %>%
+  group_by(album_release_year) %>%
+  summarize(mean_expcont4 = mean(explicit))
+
+# plot mean 
+ggplot(plotdata4, 
+       aes(x = album_release_year, 
+           y = mean_expcont4)) +
+  geom_bar(stat = "identity")+
+  xlab("Year of release")+
+  ylab("Explicit lyrics mean")
+```
+
+At this point, i focused on the collective analysis, looking for a correlation between all the artists selected. Following some plots:
+
+```{r, echo=FALSE, warning=F, message=F}
+
+library(ggplot2)
+library(dplyr)
+library(hrbrthemes)
+library(ggrepel)
+library(tibble)
+
+artists_means=tibble(Variables= colnames(1:4),m1,m2,m3,m4) %>% 
+  rename("PRINCE"="m1") %>% 
+  rename("MADONNA"="m2") %>% 
+  rename("PITBULL" = "m3") %>% 
+  rename("DRAKE"="m4")
+
+artists_means2 <- data.frame(artists=c("PRINCE", "MADONNA", "PITBULL","DRAKE"), means=c(m1, m2, m3, m4))
+
+ggplot(artists_means2, aes(x=artists, y=means, color=artists)) + 
+  geom_point(size=6) +
+  theme_ipsum()+
+  ylab("Explicit means") +
+  xlab("Artists") +
+  ggtitle("Explicit content mean for each artist")+
+  geom_text(aes(label = round(means,digits = 3)), nudge_y = 0.05)
+
+```
+
+## Plots
+As shown in the plots, we can observe that through the different generations of artists there has been an increase in the means of the explicit lyrics. Even though Prince records a slightly higher percentage compared to Madonna, he’s far behind both Pitbull and Drake.
+
+```{r, echo=FALSE, warning=F, message=F}
+
+AllDf3 <- data.frame(year=c(plotdata$album_release_year, 
+                         plotdata2$album_release_year,
+                         plotdata3$album_release_year,
+                         plotdata4$album_release_year),
+                  mean=c(plotdata$mean_expcont,
+                         plotdata2$mean_expcont2,
+                         plotdata3$mean_expcont3,
+                         plotdata4$mean_expcont4),
+                  artists=c("artist"))
+
+
+AllDf3 = mutate(
+  AllDf3, 
+  artists = ifelse(AllDf3$year <= 1990, "Prince",
+                   ifelse(AllDf3$year <= 2000, "Madonna",
+                          ifelse(AllDf3$year <= 2010, "Pitbull",
+                                 ifelse(AllDf3$year <= 2020, "Drake")))))
+
+ggplot(AllDf3, aes(mean, year, colour = artists)) + 
+  geom_point()+
+  facet_wrap(~artists, ncol = 5) +
+  ylab("Year") +
+  xlab("Explicit content") +
+  scale_x_continuous(breaks = seq(0, 1)) +
+  theme_bw()
+
+
+```
+
+If we take a look at the time passing - from 1981 to 2020 - we will notice that songs are becoming more and more explicit and it looks like there is effectively a correlation with time and the increase of explicit content in songs.
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+
+library(ggplot2)
+library(viridis)
+library(hrbrthemes)
+library(tidyr)
+
+
+ggplot(AllDf3, aes(fill=artists, y=year, x=mean)) + 
+  geom_bar(position="dodge", stat="identity") +
+  scale_fill_viridis(discrete = T, option = "E") +
+  ggtitle("Explicit lyrics through time") +
+  facet_wrap(~artists, ncol = 5) +
+  theme_ipsum() +
+  theme(legend.position="none") +
+  xlab("Explicit lyrics in songs")+
+  ylab("Year of release")
+  scale_x_continuous(breaks = seq(0, 1))
+  
+```
+
+## Conclusions
+
+At the end, I got to the conclusion 

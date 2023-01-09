@@ -3,7 +3,6 @@
 #H0: explicit content in songs has not increased through years in the pop music scene
 #Ha: explicit content in songs has increased through years in the pop music scene 
 
-
 # FIRST ----------------- 
 # calculating means
 
@@ -190,3 +189,4 @@ ggplot(AllDf3, aes(fill=artists, y=year, x=mean)) +
   xlab("Explicit lyrics in songs")+
   ylab("Year of release")
   scale_x_continuous(breaks = seq(0, 1))
+  
