@@ -372,4 +372,22 @@ ggplot(AllDf3, aes(fill=artists, y=year, x=mean)) +
 
 ## Conclusions
 
-At the end, I got to the conclusion 
+At the end, I got to the conclusion that explicit content might has increased through the years and with new generation of artists in the pop music scene, meaning on the other hand that we may reject the null hypothesis in which we stated that “explicit content in songs has not increased through years in the pop music scene”.
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+
+library(ggplot2)
+library(viridis)
+library(hrbrthemes)
+library(tidyr)
+
+
+ggplot(AllDf3, aes(x= mean, y= year))+
+  geom_point()+
+  geom_smooth(method = "lm", color="yellow")+
+  labs(title="Explicit lyrics through the years")+
+  xlab("Explicit lyrics means (for each artist")+
+  ylab("Years")
+  
+```
+Some differences might depend on the artists' style, that’s why I tried to focus on those artists who recorded the highest sales/popularity in the selected decade. However, generally speaking, if we take a closer look to the plots it’s easy to spot the increase of explicit lyrics.

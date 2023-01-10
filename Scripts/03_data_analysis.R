@@ -99,6 +99,8 @@ ggplot(plotdata4,
 # SECOND --------
 #Confronting the different artists
 
+library(broom)
+library(ggpubr)
 library(ggplot2)
 library(dplyr)
 library(hrbrthemes)
@@ -121,6 +123,7 @@ ggplot(artists_means2, aes(x=artists, y=means, color=artists)) +
   xlab("Artists") +
   ggtitle("Explicit content mean for each artist")+
   geom_text(aes(label = round(means,digits = 3)), nudge_y = 0.05)
+
 
 # Now we can try to observe the changes by putting together all
 # the different data frames
@@ -169,6 +172,14 @@ AllDf3 = mutate(
                    ifelse(AllDf3$year <= 2000, "Madonna",
                           ifelse(AllDf3$year <= 2010, "Pitbull",
                                  ifelse(AllDf3$year <= 2020, "Drake")))))
+
+
+ggplot(AllDf3, aes(x= mean, y= year))+
+  geom_point()+
+  geom_smooth(method = "lm", color="yellow")+
+  labs(title="Explicit lyrics through the years")+
+  xlab("Explicit lyrics means (for each artist")+
+  ylab("Years")
 
 ggplot(AllDf3, aes(mean, year, colour = artists)) + 
   geom_point()+
